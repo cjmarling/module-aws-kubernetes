@@ -60,21 +60,22 @@ resource "aws_eks_cluster" "ms-up-running" {
 
 # Node role
 resource "aws_iam_role" "ms-node" {
-  name               = "${local.cluster_name}.node"
+  name = "${local.cluster_name}.node"
+
   assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
     {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Effect": "Allow",
-                "Principal": {
-                    "Service": "ec2.amazonaws.com"
-                },
-                "Action": "sts:AssumeRole"
-            }
-        ]
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
     }
-    POLICY
+  ]
+}
+POLICY
 }
 
 #Node policy
